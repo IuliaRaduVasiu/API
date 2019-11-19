@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace API_tests
 {
-    public class CallsClass
+    public class AuthentificationPage
     {
         public string Authentication(string adress,string userName)
         {
