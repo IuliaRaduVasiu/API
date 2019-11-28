@@ -26,27 +26,9 @@ namespace API_tests
             this.url = url;
             this.cookie = cookie;
         }
-         public GameInfo CreateRoom(string roomName)
+        public WebResponse CreateStory(string roomId, string storyName)
         {
-            var request = HttpWebRequest.Create($"{url}/games/create/");
-            request.Method = "POST"; 
-            string body = $"name={roomName}&cardSetType=1&haveStories=true&confirmSkip=true&showVotingToObservers=true&autoReveal=true&changeVote=false&countdownTimer=false&countdownTimerValue=30"; 
-            byte[] byteArray = Encoding.UTF8.GetBytes(body);
-            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
-            request.ContentLength = byteArray.Length;
-            request.Headers.Add("Cookie", cookie);
-            Stream dataStream = request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            var response = request.GetResponse();
-            var responseStream = response.GetResponseStream();
-            var streamReader = new StreamReader(responseStream);
-            var json = streamReader.ReadToEnd();
-            return JsonConvert.DeserializeObject<GameInfo>(json);
-        }
-        public WebResponse CreateStory(string roomName, string storyName)
-        {
-            var roomInfo = CreateRoom(roomName);
-            var roomId = roomInfo.GameId;
+
             var request = HttpWebRequest.Create($"{url}/stories/create/");
             request.Method = "POST"; 
             string body = $"gameId={roomId}&name={storyName}"; 
@@ -57,9 +39,68 @@ namespace API_tests
             Stream dataStream = request.GetRequestStream();
             dataStream.Write(byteArray, 0, byteArray.Length);
             var response = request.GetResponse();
-            
+            var responseStream = response.GetResponseStream();
+            var streamReader = new StreamReader(responseStream);
+            var json = streamReader.ReadToEnd();
+
             return response;
 
+        }
+
+        public StoryInfo GetStoryDetails(string roomInfo, string storyName)
+        {
+            var request = HttpWebRequest.Create($"{url}/stories/get/");
+            request.Method = "POST";
+            string body = $"gameId={roomInfo}&page=1&skip=0&perPage=25&status=0";
+            byte[] byteArray = Encoding.UTF8.GetBytes(body);
+            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+            request.Headers.Add("Cookie", cookie);
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            var response = request.GetResponse();
+            var responseStream = response.GetResponseStream();
+            var streamReader = new StreamReader(responseStream);
+            var json = streamReader.ReadToEnd();
+            var storyList = JsonConvert.DeserializeObject<StoryList>(json);
+            var storycontent = storyList;
+            var element = storycontent;
+            return storyList.Stories[0];
+        }
+
+        public WebResponse NewStoryName(string roomInfo, string storyName, string newStoryName)
+{
+            var storyInfo = GetStoryDetails(roomInfo, storyName);
+            var storyId = storyInfo;
+            var request = HttpWebRequest.Create($"{url}/stories/details/");
+            request.Method = "POST"; 
+            string body = $"storyId={storyId}&gameId={roomInfo}"; 
+            byte[] byteArray = Encoding.UTF8.GetBytes(body);
+            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+            request.ContentLength = byteArray.Length;
+            request.Headers.Add("Cookie", cookie);
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            var response = request.GetResponse();
+            
+            return response;
+        }
+
+        public WebResponse StartVoting (string roomName)
+        {
+             var roomInfo = CreateRoom(roomName);
+            var roomId = roomInfo.GameId;
+            var request = HttpWebRequest.Create($"{url}/stories/next/");
+            request.Method = "POST"; 
+            string body = $"gameId={roomId}"; 
+            byte[] byteArray = Encoding.UTF8.GetBytes(body);
+            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+            request.ContentLength = byteArray.Length;
+            request.Headers.Add("Cookie", cookie);
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            var response = request.GetResponse();
+            
+            return response;
         }
     }
 }
