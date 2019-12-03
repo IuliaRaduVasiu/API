@@ -68,7 +68,7 @@ namespace API_tests
         }
 
         public WebResponse NewStoryName(string roomInfo, string newStoryName)
-{
+        {
             var storyInfo = GetStoryDetails(roomInfo);
             var storyId = storyInfo;
             var request = HttpWebRequest.Create($"{url}/stories/details/");
@@ -102,5 +102,25 @@ namespace API_tests
             var json = streamReader.ReadToEnd();
             return JsonConvert.DeserializeObject<StartVotingInfo>(json);
         }
+
+        public WebResponse CardSelection (string roomInfo, int selectedCard)
+        {
+            var request = HttpWebRequest.Create($"{url}/stories/vote/");
+            request.Method = "POST"; 
+            string body = $"gameId={roomInfo}&vote={selectedCard}"; 
+            byte[] byteArray = Encoding.UTF8.GetBytes(body);
+            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+            request.ContentLength = byteArray.Length;
+            request.Headers.Add("Cookie", cookie);
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            var response = request.GetResponse();
+            var responseStream = response.GetResponseStream();
+            var streamReader = new StreamReader(responseStream);
+            var json = streamReader.ReadToEnd();
+
+            return response;
+        }
+
     }
 }

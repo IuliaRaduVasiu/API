@@ -22,7 +22,7 @@ namespace API_tests
      private const string newRoomName = "API Test Room";
      private const string storyName = "Test Story";
      private const int cardType = 4;
-
+     private const int selectedCard = 6;
       private AuthentificationPage authentification = new AuthentificationPage();
 
 
@@ -145,6 +145,22 @@ namespace API_tests
             storyCreation.StartVoting(gameId);
 
         }
+
+        [Fact]
+         public void CardSelection()
+        {
+            var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+            var room = new RoomsPage(adress, cookie);
+            var gameInfo = room.CreateRoom("test");
+            var gameId = gameInfo.GameId.ToString();
+            var storyCreation  = new RoomPage(adress, cookie);
+            var story = storyCreation.CreateStory(gameId, "story");
+            var storyDetails = storyCreation.GetStoryDetails(gameId);
+            var startVoting = storyCreation.StartVoting(gameId);
+            storyCreation.CardSelection(gameId, selectedCard);
+
+        }
+
     }
 }
 
