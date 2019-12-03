@@ -47,7 +47,7 @@ namespace API_tests
 
         }
 
-        public StoryInfo GetStoryDetails(string roomInfo, string storyName)
+        public StoryInfo GetStoryDetails(string roomInfo)
         {
             var request = HttpWebRequest.Create($"{url}/stories/get/");
             request.Method = "POST";
@@ -67,9 +67,9 @@ namespace API_tests
             return storyList.Stories[0];
         }
 
-        public WebResponse NewStoryName(string roomInfo, string storyName, string newStoryName)
+        public WebResponse NewStoryName(string roomInfo, string newStoryName)
 {
-            var storyInfo = GetStoryDetails(roomInfo, storyName);
+            var storyInfo = GetStoryDetails(roomInfo);
             var storyId = storyInfo;
             var request = HttpWebRequest.Create($"{url}/stories/details/");
             request.Method = "POST"; 
@@ -85,7 +85,7 @@ namespace API_tests
             return response;
         }
 
-        public WebResponse StartVoting (string roomInfo)
+        public StartVotingInfo StartVoting (string roomInfo)
         {
             var request = HttpWebRequest.Create($"{url}/stories/next/");
             request.Method = "POST"; 
@@ -97,8 +97,10 @@ namespace API_tests
             Stream dataStream = request.GetRequestStream();
             dataStream.Write(byteArray, 0, byteArray.Length);
             var response = request.GetResponse();
-            
-            return response;
+            var responseStream = response.GetResponseStream();
+            var streamReader = new StreamReader(responseStream);
+            var json = streamReader.ReadToEnd();
+            return JsonConvert.DeserializeObject<StartVotingInfo>(json);
         }
     }
 }

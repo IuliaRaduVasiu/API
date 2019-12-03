@@ -119,30 +119,32 @@ namespace API_tests
         }
 
         [Fact]
-        public void ChangeStoryName()
+               public void ChangeStoryName()
+        {
+            var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+            var roomsPage = new RoomsPage(adress, cookie);
+            var gameInfo = roomsPage.CreateRoom("test");
+            var storyCreation  = new RoomPage(adress, cookie);
+            var gameId = gameInfo.GameId.ToString();
+            var story = storyCreation.CreateStory(gameId, "story");
+            var storyDetails = storyCreation.GetStoryDetails(gameId);
+            Assert.Equal("story", storyDetails.Title);
+        }
+
+
+        [Fact]
+        public void StartVoting()
         {
             var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
             var room = new RoomsPage(adress, cookie);
             var gameInfo = room.CreateRoom("test");
+            var gameId = gameInfo.GameId.ToString();
             var storyCreation  = new RoomPage(adress, cookie);
-            var story = storyCreation.CreateStory("test", "story");
-            System.Threading.Thread.Sleep(6000);
-            var storyDetails = storyCreation.GetStoryDetails("test", "story1");
-            //var newStoryName = story.NewStoryName("test", "story3");
+            var story = storyCreation.CreateStory(gameId, "story");
+            var storyDetails = storyCreation.GetStoryDetails(gameId);
+            storyCreation.StartVoting(gameId);
 
         }
-
-        // [Fact]
-        // public void StartVoting()
-        // {
-        //     var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
-        //     var room = new RoomsPage(adress, cookie);
-        //     var gameInfo = room.CreateRoom("test");
-        //     var story  = new RoomPage(adress, cookie);
-        //     story.CreateStory("test", "story");
-        //     story.StartVoting("Test");
-
-        // }
     }
 }
 
