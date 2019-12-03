@@ -126,23 +126,23 @@ namespace API_tests
             var gameInfo = room.CreateRoom("test");
             var storyCreation  = new RoomPage(adress, cookie);
             var story = storyCreation.CreateStory("test", "story");
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(6000);
             var storyDetails = storyCreation.GetStoryDetails("test", "story1");
             //var newStoryName = story.NewStoryName("test", "story3");
 
         }
 
-        [Fact]
-        public void StartVoting()
-        {
-            var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
-            var room = new RoomsPage(adress, cookie);
-            var gameInfo = room.CreateRoom("test");
-            var story  = new RoomPage(adress, cookie);
-            story.CreateStory("test", "story");
-            story.StartVoting("Test");
+        // [Fact]
+        // public void StartVoting()
+        // {
+        //     var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+        //     var room = new RoomsPage(adress, cookie);
+        //     var gameInfo = room.CreateRoom("test");
+        //     var story  = new RoomPage(adress, cookie);
+        //     story.CreateStory("test", "story");
+        //     story.StartVoting("Test");
 
-        }
+        // }
     }
 }
 

@@ -85,13 +85,11 @@ namespace API_tests
             return response;
         }
 
-        public WebResponse StartVoting (string roomName)
+        public WebResponse StartVoting (string roomInfo)
         {
-             var roomInfo = CreateRoom(roomName);
-            var roomId = roomInfo.GameId;
             var request = HttpWebRequest.Create($"{url}/stories/next/");
             request.Method = "POST"; 
-            string body = $"gameId={roomId}"; 
+            string body = $"gameId={roomInfo}"; 
             byte[] byteArray = Encoding.UTF8.GetBytes(body);
             request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
             request.ContentLength = byteArray.Length;

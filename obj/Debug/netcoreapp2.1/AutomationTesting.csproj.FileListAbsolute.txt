@@ -21,7 +21,6 @@
 /Users/Iulia/Desktop/API/bin/Debug/netcoreapp2.1/AutomationTesting.dll
 /Users/Iulia/Desktop/API/bin/Debug/netcoreapp2.1/AutomationTesting.pdb
 /Users/Iulia/Desktop/API/obj/Debug/netcoreapp2.1/AutomationTesting.csprojAssemblyReference.cache
-/Users/Iulia/Desktop/API/obj/Debug/netcoreapp2.1/AutomationTesting.csproj.CoreCompileInputs.cache
 /Users/Iulia/Desktop/API/obj/Debug/netcoreapp2.1/AutomationTesting.AssemblyInfoInputs.cache
 /Users/Iulia/Desktop/API/obj/Debug/netcoreapp2.1/AutomationTesting.AssemblyInfo.cs
 /Users/Iulia/Desktop/API/obj/Debug/netcoreapp2.1/AutomationTesting.dll

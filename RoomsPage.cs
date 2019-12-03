@@ -22,7 +22,7 @@ namespace API_tests
         private string url;
         private string cookie;
 
-public RoomsPage(string url, string cookie)
+        public RoomsPage(string url, string cookie)
         {
             this.url = url;
             this.cookie = cookie;
