@@ -1,11 +1,4 @@
-﻿using System.Net.Http;
-using System.Net;
-using System.IO;
-using System.Web;
-using OpenQA.Selenium;
-using Xunit;
-using System;
-using OpenQA.Selenium.Chrome;
+﻿using Xunit;
 
 namespace API_tests
 {
