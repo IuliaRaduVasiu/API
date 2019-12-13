@@ -6,17 +6,13 @@ namespace API_tests
     public class Class1
     {
      private const string adress = "https://www.planitpoker.com/api";
-     private const string roomAdress = "https://www.planitpoker.com/api/games/create/";
-     private const string newRoomNameAdress = "https://www.planitpoker.com/api/games/edit/";
-     private const string deleteRoomAdress = "https://www.planitpoker.com/api/games/delete";
-     private const string storyAdress = "https://www.planitpoker.com/api/stories/create/";
      private const string userName = "Iulia";
      private const string roomName = "Teste Room";
      private const string newRoomName = "API Test Room";
      private const string storyName = "Test Story";
      private const int cardType = 4;
      private const int selectedCard = 6;
-      private AuthentificationPage authentification = new AuthentificationPage();
+    private AuthentificationPage authentification = new AuthentificationPage();
 
 
         [Fact]
@@ -105,44 +101,107 @@ namespace API_tests
             //When the user creates a room
             var roomsPage = new RoomsPage(adress, cookie);
             var gameInfo = roomsPage.CreateRoom("test");
+            var gameId = gameInfo.GameId.ToString();
+            var storyCreation = new RoomPage(adress, cookie);
+            storyCreation.CreateStory(gameInfo.GameId.ToString(), "story");
+            var storyDetails = storyCreation.GetStoryDetails(gameId);
 
-            //Then the user can delete the room
-            var roomPage = new RoomPage(adress, cookie);
-            roomPage.CreateStory(gameInfo.GameId.ToString(), "story");
+            //Then the user can create a story
+            Assert.Equal("story", storyDetails.Title);
         }
 
-        [Fact]
-               public void ChangeStoryName()
+            [Fact]
+            public void ChangeStoryName()
         {
+            //Scenario: Changeing the story name
+            // Given a user creates a temporary account
             var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+
+            // When the user creates a voting session
             var roomsPage = new RoomsPage(adress, cookie);
             var gameInfo = roomsPage.CreateRoom("test");
             var storyCreation  = new RoomPage(adress, cookie);
             var gameId = gameInfo.GameId.ToString();
             var story = storyCreation.CreateStory(gameId, "story");
-            var storyDetails = storyCreation.GetStoryDetails(gameId);
-            Assert.Equal("story", storyDetails.Title);
+            var storyId = storyCreation.GetStoryDetails(gameId).Id.ToString();
+            var newStoryName = storyCreation.NewStoryName(storyId ,"story3");
+            var newStoryDetails = storyCreation.NewStoryDetails(gameId).Title.ToString();
+
+            //Then the user cand change the name
+            Assert.Equal("story3", newStoryDetails);
+        }
+
+            [Fact]
+            public void DeteleteStory()
+        {
+            //Scenario: Deleting a story
+            //Given a user creates a temporary account
+            var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+
+            //When the user creates a voting session
+            var roomsPage = new RoomsPage(adress, cookie);
+            var gameInfo = roomsPage.CreateRoom("test");
+            var storyCreation  = new RoomPage(adress, cookie);
+            var gameId = gameInfo.GameId.ToString();
+            var story = storyCreation.CreateStory(gameId, "story");
+            var storyDetails = storyCreation.GetStoryDetails(gameId).Id.ToString();
+            var deleteAStory = storyCreation.DeleteStory(gameId, storyDetails);
+
+            //Then the user can detele a story
+            Assert.NotNull(deleteAStory);
         }
 
 
         [Fact]
         public void StartVoting()
         {
+            //Scenario: Starting a voting session
+            //Given a user creates a temporary account
             var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+
+            //When the user creates a room
             var room = new RoomsPage(adress, cookie);
             var gameInfo = room.CreateRoom("test");
             var gameId = gameInfo.GameId.ToString();
             var storyCreation  = new RoomPage(adress, cookie);
             var story = storyCreation.CreateStory(gameId, "story");
             var storyDetails = storyCreation.GetStoryDetails(gameId);
-            storyCreation.StartVoting(gameId);
+            var startVoting = storyCreation.StartVoting(gameId);
 
+            //Then the user cand start a voting session
+            Assert.NotEqual(startVoting.ToString(), "0");
         }
 
         [Fact]
          public void CardSelection()
         {
+            //Scenario: Card selectio
+            //Given a user creates a temporary account
             var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+
+            //When the user start a voting session
+            var room = new RoomsPage(adress, cookie);
+            var gameInfo = room.CreateRoom("test");
+            var gameId = gameInfo.GameId.ToString();
+            var storyCreation  = new RoomPage(adress, cookie);
+            var story = storyCreation.CreateStory(gameId, "story");
+            var storyDetails = storyCreation.GetStoryDetails(gameId);
+            var startVoting = storyCreation.StartVoting(gameId);
+            var cardSelectio = storyCreation.CardSelection(gameId, selectedCard);
+
+            //Then the user can select a card
+            Assert.NotNull(cardSelectio);
+
+        }
+
+            [Fact]
+         public void FinishVoting()
+        {
+            //Scenario: Card selectio
+            //Given a user creates a temporary account
+            var cookie = authentification.Authentication($"{adress}/authentication/anonymous", userName);
+
+            //When the user start a voting session
             var room = new RoomsPage(adress, cookie);
             var gameInfo = room.CreateRoom("test");
             var gameId = gameInfo.GameId.ToString();
@@ -151,7 +210,10 @@ namespace API_tests
             var storyDetails = storyCreation.GetStoryDetails(gameId);
             var startVoting = storyCreation.StartVoting(gameId);
             storyCreation.CardSelection(gameId, selectedCard);
+            var finishVoting = storyCreation.FnishVoting(gameId, selectedCard);
 
+            //Then the user cand finish the voting session
+            Assert.NotNull(finishVoting);
         }
 
     }
