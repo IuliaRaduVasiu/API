@@ -1,4 +1,12 @@
 ﻿using Xunit;
+using System.Net;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Refit;
+
 
 namespace API_tests
 {
@@ -76,7 +84,7 @@ namespace API_tests
         }
         
         [Fact]
-        public void DeteleRoom()
+        public  void DeteleRoom()
         {
             //Scenario: Deleting a room
             //Given a user creates a username in the application
