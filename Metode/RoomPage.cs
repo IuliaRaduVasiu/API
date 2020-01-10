@@ -75,7 +75,7 @@ namespace API_tests
             return response;
         }
 
-            public NewStoryInfo NewStoryDetails(string roomInfo)
+            public StoryInfo NewStoryDetails(string roomInfo)
         {
             var request = HttpWebRequest.Create($"{url}/stories/get/");
             request.Method = "POST";
@@ -89,7 +89,7 @@ namespace API_tests
             var responseStream = response.GetResponseStream();
             var streamReader = new StreamReader(responseStream);
             var json = streamReader.ReadToEnd();
-            var storyList = JsonConvert.DeserializeObject<NewStoryList>(json);
+            var storyList = JsonConvert.DeserializeObject<StoryList>(json);
             var storycontent = storyList;
             var element = storycontent;
             return storyList.Stories[0];

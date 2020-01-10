@@ -1,0 +1,13 @@
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/xunit.runner.visualstudio.dotnetcore.testadapter.dll
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/xunit.runner.reporters.netcoreapp10.dll
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/xunit.runner.utility.netcoreapp10.dll
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/Refit.deps.json
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/Refit.runtimeconfig.json
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/Refit.runtimeconfig.dev.json
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/Refit.dll
+/Users/iulia/Desktop/API/Refit/bin/Debug/netcoreapp2.1/Refit.pdb
+/Users/iulia/Desktop/API/Refit/obj/Debug/netcoreapp2.1/Refit.csprojAssemblyReference.cache
+/Users/iulia/Desktop/API/Refit/obj/Debug/netcoreapp2.1/Refit.AssemblyInfoInputs.cache
+/Users/iulia/Desktop/API/Refit/obj/Debug/netcoreapp2.1/Refit.AssemblyInfo.cs
+/Users/iulia/Desktop/API/Refit/obj/Debug/netcoreapp2.1/Refit.dll
+/Users/iulia/Desktop/API/Refit/obj/Debug/netcoreapp2.1/Refit.pdb

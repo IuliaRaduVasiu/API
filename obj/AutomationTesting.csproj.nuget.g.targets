@@ -11,6 +11,7 @@
     <Import Project="$(NuGetPackageRoot)selenium.webdriver.microsoftdriver/17.17134.0/build/Selenium.WebDriver.MicrosoftDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver.microsoftdriver/17.17134.0/build/Selenium.WebDriver.MicrosoftDriver.targets')" />
     <Import Project="$(NuGetPackageRoot)selenium.webdriver.chromedriver/78.0.3904.7000/build/Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver.chromedriver/78.0.3904.7000/build/Selenium.WebDriver.ChromeDriver.targets')" />
     <Import Project="$(NuGetPackageRoot)selenium.firefox.webdriver/0.24.0/build/Selenium.Firefox.WebDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.firefox.webdriver/0.24.0/build/Selenium.Firefox.WebDriver.targets')" />
+    <Import Project="$(NuGetPackageRoot)refit/5.0.23/buildTransitive/netstandard2.0/refit.targets" Condition="Exists('$(NuGetPackageRoot)refit/5.0.23/buildTransitive/netstandard2.0/refit.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.netcore.app/2.1.0/build/netcoreapp2.1/Microsoft.NETCore.App.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.netcore.app/2.1.0/build/netcoreapp2.1/Microsoft.NETCore.App.targets')" />
   </ImportGroup>
 </Project>

@@ -10,7 +10,8 @@
         "dependencies": {
           "DropDownList": "1.2.3",
           "Microsoft.NET.Test.Sdk": "16.5.0-preview-20191115-01",
-          "Newtonsoft.Json": "12.0.3-beta2",
+          "Newtonsoft.Json": "12.0.3",
+          "Refit": "5.0.23",
           "Selenium.Firefox.WebDriver": "0.24.0",
           "Selenium.Support": "3.141.0",
           "Selenium.WebDriver": "3.141.0",
@@ -143,7 +144,7 @@
       "Microsoft.TestPlatform.TestHost/16.5.0-preview-20191115-01": {
         "dependencies": {
           "Microsoft.TestPlatform.ObjectModel": "16.5.0-preview-20191115-01",
-          "Newtonsoft.Json": "12.0.3-beta2"
+          "Newtonsoft.Json": "12.0.3"
         },
         "runtime": {
           "lib/netcoreapp2.1/Microsoft.TestPlatform.CommunicationUtilities.dll": {
@@ -287,11 +288,11 @@
           }
         }
       },
-      "Newtonsoft.Json/12.0.3-beta2": {
+      "Newtonsoft.Json/12.0.3": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "12.0.0.0",
-            "fileVersion": "12.0.3.23806"
+            "fileVersion": "12.0.3.23909"
           }
         }
       },
@@ -300,6 +301,17 @@
           "lib/netstandard2.0/NuGet.Frameworks.dll": {
             "assemblyVersion": "5.0.0.6",
             "fileVersion": "5.0.0.5923"
+          }
+        }
+      },
+      "Refit/5.0.23": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Refit.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.23.44935"
           }
         }
       },
@@ -317,7 +329,7 @@
       },
       "Selenium.WebDriver/3.141.0": {
         "dependencies": {
-          "Newtonsoft.Json": "12.0.3-beta2"
+          "Newtonsoft.Json": "12.0.3"
         },
         "runtime": {
           "lib/netstandard2.0/WebDriver.dll": {
@@ -503,12 +515,12 @@
       "path": "microsoft.testplatform.testhost/16.5.0-preview-20191115-01",
       "hashPath": "microsoft.testplatform.testhost.16.5.0-preview-20191115-01.nupkg.sha512"
     },
-    "Newtonsoft.Json/12.0.3-beta2": {
+    "Newtonsoft.Json/12.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-CNkBl+FKCsp1Tw7MKCpSOCKfZIElxOOBhG46VnFV2G0hRCC1Cc2UUJDknETNGeymXN1/k6hxd44uGVZvdwyEsQ==",
-      "path": "newtonsoft.json/12.0.3-beta2",
-      "hashPath": "newtonsoft.json.12.0.3-beta2.nupkg.sha512"
+      "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "path": "newtonsoft.json/12.0.3",
+      "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
     },
     "NuGet.Frameworks/5.0.0": {
       "type": "package",
@@ -516,6 +528,13 @@
       "sha512": "sha512-c5JVjuVAm4f7E9Vj+v09Z9s2ZsqFDjBpcsyS3M9xRo0bEdm/LVZSzLxxNvfvAwRiiE8nwe1h2G4OwiwlzFKXlA==",
       "path": "nuget.frameworks/5.0.0",
       "hashPath": "nuget.frameworks.5.0.0.nupkg.sha512"
+    },
+    "Refit/5.0.23": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5Hc55wSJck4XfgCBTSnU1autqVk9Qq7aBa3xf829qX8aL6UInUhq0ZN5EzFlcffefUyNOdOJ9R37aK7/BnlOww==",
+      "path": "refit/5.0.23",
+      "hashPath": "refit.5.0.23.nupkg.sha512"
     },
     "Selenium.Firefox.WebDriver/0.24.0": {
       "type": "package",
