@@ -21,7 +21,7 @@ namespace API_tests
      private const string storyName = "Test Story";
      private const int cardType = 4;
      private const int selectedCard = 6;
-    private Authentification authentification = new Authentification();
+     private AuthentificationPage authentification = new AuthentificationPage();
     
     
               [Fact]
@@ -32,7 +32,7 @@ namespace API_tests
             var cookies = authentification.Authentication($"{adress}/authentication/anonymous", userName);
 
             //When the user creates a room
-            var room = new RoomsPage(adress, cookies);
+            var room = new RoomsPageInterface(adress, cookies);
 
             var roomDetails = new RoomBody
             {
@@ -46,9 +46,10 @@ namespace API_tests
                 countdownTimer = false, 
                 countdownTimerValue = 30
             };
-            var gameinfo = RestService.For<RoomActions>(adress);
-            var delete = RestService.For<DeleteRoom>(adress);
+            var gameinfo = RestService.For<RoomsPageInterface.RoomActions>(adress);
             var roomSomething = await gameinfo.GetRoomInfo(roomDetails);
+            var delete = RestService.For<RoomsPageInterface.DeleteRoom>(adress);
+            
 
             //Then the user can delete the room
         }
