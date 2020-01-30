@@ -77,9 +77,9 @@ namespace API_tests
             //When the user creates a room
             var room = new RoomsPage(adress, cookies);
             var gameInfo = room.CreateRoom("Test Room");
+            var changeRoomName = room.NewRoomName("Test Room","Test Room Gigel");
 
             //Then the user can change the room name
-            var changeRoomName = room.NewRoomName("Test Room","Test Room Gigel");
             Assert.NotNull(changeRoomName);
         }
         

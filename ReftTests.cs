@@ -1,12 +1,12 @@
 using Xunit;
-using System.Net;
+using System.Net.Http;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Refit;
-
+using System;
 
 namespace API_tests
 {
@@ -17,42 +17,125 @@ namespace API_tests
      private const string adress = "https://www.planitpoker.com/api";
      private const string userName = "Iulia";
      private const string roomName = "Teste Room";
-     private const string newRoomName = "API Test Room";
+     private const string newName = "Test Room2";
      private const string storyName = "Test Story";
      private const int cardType = 4;
      private const int selectedCard = 6;
      private AuthentificationPage authentification = new AuthentificationPage();
     
-    
+              [Fact]
+        public async void CreateRoom()
+        {
+             var dictionary = new Dictionary<string, string> { { "name", userName } };
+            var client = new HttpClient() { BaseAddress = new Uri(adress, UriKind.Absolute) };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/authentication/anonymous") { Content = new FormUrlEncodedContent(dictionary) };
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var roomDetails = new RoomBody
+            {
+                name = roomName,
+                cardSetType = 1,
+                haveStories = true,
+                showVotingToObservers = true,
+                confirmSkip = true,
+                autoReveal = true,
+                changeVote = false,
+                countdownTimer = false,
+                countdownTimerValue = 30
+            };
+            var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
+            var info = await roomActions.GetRoomInfo(roomDetails,roomDetails);
+        }
+
+              [Fact]
+        public async void NewRommName()
+        {
+          var dictionary = new Dictionary<string, string> { { "name", userName } };
+            var client = new HttpClient() { BaseAddress = new Uri(adress, UriKind.Absolute) };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/authentication/anonymous") { Content = new FormUrlEncodedContent(dictionary) };
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var roomDetails = new RoomBody
+            {
+                name = roomName,
+                cardSetType = 1,
+                haveStories = true,
+                showVotingToObservers = true,
+                confirmSkip = true,
+                autoReveal = true,
+                changeVote = false,
+                countdownTimer = false,
+                countdownTimerValue = 30
+            };
+            var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
+            var info = await roomActions.GetRoomInfo(roomDetails, roomDetails);   
+
+              var newRoomDetails = new RoomBody
+            {
+                name = newName,
+                cardSetType = 1,
+                haveStories = true,
+                showVotingToObservers = true,
+                confirmSkip = true,
+                autoReveal = true,
+                changeVote = false,
+                countdownTimer = false,
+                countdownTimerValue = 30
+            };
+            var newRoomName = RestService.For<RoomsPageInterface.NewRoomNameInterface>(client);
+            var newInfo = await newRoomName.GetRoomInfo(newRoomDetails);
+        }
+
               [Fact]
         public async void DeteleRoom()
         {
-            //Scenario: Deleting a room
-            //Given a user creates a username in the application
-            var cookies = authentification.Authentication($"{adress}/authentication/anonymous", userName);
-
-            //When the user creates a room
-            var room = new RoomsPageInterface(adress, cookies);
-
+            var dictionary = new Dictionary<string, string> { { "name", userName } };
+            var client = new HttpClient() { BaseAddress = new Uri(adress, UriKind.Absolute) };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/authentication/anonymous") { Content = new FormUrlEncodedContent(dictionary) };
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
             var roomDetails = new RoomBody
             {
-                name = roomName, 
-                cardSetType = 1, 
-                haveStories = true, 
-                showVotingToObservers = true, 
-                confirmSkip = true, 
-                autoReveal = true, 
-                changeVote = false, 
-                countdownTimer = false, 
+                name = roomName,
+                cardSetType = 1,
+                haveStories = true,
+                showVotingToObservers = true,
+                confirmSkip = true,
+                autoReveal = true,
+                changeVote = false,
+                countdownTimer = false,
                 countdownTimerValue = 30
             };
-            var gameinfo = RestService.For<RoomsPageInterface.RoomActions>(adress);
-            var roomSomething = await gameinfo.GetRoomInfo(roomDetails);
+            var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
+            var info = await roomActions.GetRoomInfo(roomDetails, roomDetails);
             var delete = RestService.For<RoomsPageInterface.DeleteRoom>(adress);
-            
-
-            //Then the user can delete the room
         }
+
+             [Fact]
+        public async void CardSelection()
+        {
+            var dictionary = new Dictionary<string, string> { { "name", userName } };
+            var client = new HttpClient() { BaseAddress = new Uri(adress, UriKind.Absolute) };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/authentication/anonymous") { Content = new FormUrlEncodedContent(dictionary) };
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var roomDetails = new RoomBody
+            {
+                name = roomName,
+                cardSetType = cardType,
+                haveStories = true,
+                showVotingToObservers = true,
+                confirmSkip = true,
+                autoReveal = true,
+                changeVote = false,
+                countdownTimer = false,
+                countdownTimerValue = 30
+            };
+            var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
+            var info = await roomActions.GetRoomInfo(roomDetails, roomDetails);
+           
+        }
+
 
     }
 }

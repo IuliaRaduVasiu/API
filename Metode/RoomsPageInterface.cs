@@ -24,14 +24,28 @@ namespace API_tests
         public interface RoomActions
         {
             [Post("/games/create/")]
-            Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)]RoomBody name);
+            Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)]RoomBody name, RoomBody cardSetType);
 
 
         }
+
+        public interface NewRoomNameInterface
+        {
+            [Post("/games/edit/")]
+            Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)]RoomBody name);
+        }
+        
         public interface DeleteRoom
         {
             [Delete("/games/delete")]
             Task  DeleteRoom([Body]int gameId);
         }
+
+        // public interface CardType
+        // {
+        //     [Post("games/create/")]
+        //     Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)]RoomBody name, RoomBody cardSetType);
+        // }
+        
     }
 }
