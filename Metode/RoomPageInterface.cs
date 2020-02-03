@@ -10,21 +10,21 @@ using Refit;
 
 namespace API_tests
 {
-    public class RoomsPageInterface
+    public class RoomPageInterface
     {
         private string url;
         private string cookie;
 
-        public RoomsPageInterface(string url, string cookie)
+        public RoomPageInterface(string url, string cookie)
         {
             this.url = url;
             this.cookie = cookie;
         }
 
-        public interface RoomActions
+        public interface StoryActions
         {
-            [Post("/games/create/")]
-            Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)]RoomBody name, RoomBody cardSetType);
+            [Post("/stories/create/")]
+            Task<StoryInfo> GetStoryInfo([Body(BodySerializationMethod.UrlEncoded)] GameInfo gameId, StoryBody name);
 
 
         }

@@ -21,9 +21,10 @@ namespace API_tests
      private const string storyName = "Test Story";
      private const int cardType = 4;
      private const int selectedCard = 6;
+     private  int gameId = new GameInfo().GameId;
      private AuthentificationPage authentification = new AuthentificationPage();
-    
-              [Fact]
+
+        [Fact]
         public async void CreateRoom()
         {
              var dictionary = new Dictionary<string, string> { { "name", userName } };
@@ -134,6 +135,38 @@ namespace API_tests
             var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
             var info = await roomActions.GetRoomInfo(roomDetails, roomDetails);
            
+        }
+
+              [Fact]
+        public async void CreateStory()
+        {
+             var dictionary = new Dictionary<string, string> { { "name", userName } };
+            var client = new HttpClient() { BaseAddress = new Uri(adress, UriKind.Absolute) };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/authentication/anonymous") { Content = new FormUrlEncodedContent(dictionary) };
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var roomDetails = new RoomBody
+            {
+                name = roomName,
+                cardSetType = 1,
+                haveStories = true,
+                showVotingToObservers = true,
+                confirmSkip = true,
+                autoReveal = true,
+                changeVote = false,
+                countdownTimer = false,
+                countdownTimerValue = 30
+            };
+            var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
+            var info = await roomActions.GetRoomInfo(roomDetails,roomDetails);
+
+            var storyDetails = new StoryBody
+            {
+                RoomId = new GameInfo().GameId,
+                name = storyName
+            };
+            var storyActions = RestService.For<RoomPageInterface.StoryActions>(client);
+            var storyInfo = await storyActions.GetStoryInfo(gameId, storyDetails);
         }
 
 
