@@ -166,7 +166,7 @@ namespace API_tests
                 name = storyName
             };
             var storyActions = RestService.For<RoomPageInterface.StoryActions>(client);
-            var storyInfo = await storyActions.GetStoryInfo(gameId, storyDetails);
+            var storyInfo = await storyActions.GetStory(gameId, storyDetails);
         }
 
 

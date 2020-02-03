@@ -21,24 +21,12 @@ namespace API_tests
             this.cookie = cookie;
         }
 
-        public interface StoryActions
+             public interface StoryActions
         {
             [Post("/stories/create/")]
-            Task<StoryInfo> GetStoryInfo([Body(BodySerializationMethod.UrlEncoded)] GameInfo gameId, StoryBody name);
-
+            Task<StoryInfo> GetStory([Body(BodySerializationMethod.UrlEncoded)] int gameId, StoryBody name);
+            
 
         }
-
-        public interface NewRoomNameInterface
-        {
-            [Post("/games/edit/")]
-            Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)]RoomBody name);
-        }
-        
-        public interface DeleteRoom
-        {
-            [Delete("/games/delete")]
-            Task  DeleteRoom([Body]int gameId);
-        }        
     }
 }
