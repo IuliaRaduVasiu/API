@@ -23,9 +23,7 @@ namespace API_tests
         public interface RoomActions
         {
             [Post("/games/create/")]
-            Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)]RoomBody name, RoomBody cardSetType);
-
-
+            Task<GameInfo> GetRoomInfo([Body(BodySerializationMethod.UrlEncoded)] RoomBody name);
         }
 
         public interface NewRoomNameInterface

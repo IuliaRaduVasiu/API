@@ -120,10 +120,10 @@ namespace API_tests
         }
 
         /// <inheritdoc />
-        Task<GameInfo> RoomsPageInterface.RoomActions.GetRoomInfo(RoomBody name, RoomBody cardSetType)
+        Task<GameInfo> RoomsPageInterface.RoomActions.GetRoomInfo(RoomBody name)
         {
-            var arguments = new object[] { name, cardSetType };
-            var func = requestBuilder.BuildRestResultFuncForMethod("GetRoomInfo", new Type[] { typeof(RoomBody), typeof(RoomBody) });
+            var arguments = new object[] { name };
+            var func = requestBuilder.BuildRestResultFuncForMethod("GetRoomInfo", new Type[] { typeof(RoomBody) });
             return (Task<GameInfo>)func(Client, arguments);
         }
     }
@@ -152,11 +152,27 @@ namespace API_tests
         }
 
         /// <inheritdoc />
-        Task<StoryInfo> RoomPageInterface.StoryActions.GetStory(int gameId, StoryBody name)
+        Task<StoryInfo> RoomPageInterface.StoryActions.GetStory(StoryBody roomId, StoryBody name)
         {
-            var arguments = new object[] { gameId, name };
-            var func = requestBuilder.BuildRestResultFuncForMethod("GetStory", new Type[] { typeof(int), typeof(StoryBody) });
+            var arguments = new object[] { roomId, name };
+            var func = requestBuilder.BuildRestResultFuncForMethod("GetStory", new Type[] { typeof(StoryBody), typeof(StoryBody) });
             return (Task<StoryInfo>)func(Client, arguments);
+        }
+
+        /// <inheritdoc />
+        Task<StoryList> RoomPageInterface.StoryActions.GetStoryDetails(StoryDetailsBody roomDetails)
+        {
+            var arguments = new object[] { roomDetails };
+            var func = requestBuilder.BuildRestResultFuncForMethod("GetStoryDetails", new Type[] { typeof(StoryDetailsBody) });
+            return (Task<StoryList>)func(Client, arguments);
+        }
+
+        /// <inheritdoc />
+        Task<StoryList> RoomPageInterface.StoryActions.ChangeStoryName(UpdateStoryBody newStoryName)
+        {
+            var arguments = new object[] { newStoryName };
+            var func = requestBuilder.BuildRestResultFuncForMethod("ChangeStoryName", new Type[] { typeof(UpdateStoryBody) });
+            return (Task<StoryList>)func(Client, arguments);
         }
     }
 }

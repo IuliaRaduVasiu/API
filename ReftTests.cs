@@ -19,9 +19,10 @@ namespace API_tests
      private const string roomName = "Teste Room";
      private const string newName = "Test Room2";
      private const string storyName = "Test Story";
+     private const string newStoryName = "Gigel";
      private const int cardType = 4;
      private const int selectedCard = 6;
-     private  int gameId = new GameInfo().GameId;
+    
      private AuthentificationPage authentification = new AuthentificationPage();
 
         [Fact]
@@ -45,9 +46,8 @@ namespace API_tests
                 countdownTimerValue = 30
             };
             var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
-            var info = await roomActions.GetRoomInfo(roomDetails,roomDetails);
+            var info = await roomActions.GetRoomInfo(roomDetails);
         }
-
               [Fact]
         public async void NewRommName()
         {
@@ -69,7 +69,7 @@ namespace API_tests
                 countdownTimerValue = 30
             };
             var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
-            var info = await roomActions.GetRoomInfo(roomDetails, roomDetails);   
+            var info = await roomActions.GetRoomInfo(roomDetails);   
 
               var newRoomDetails = new RoomBody
             {
@@ -108,7 +108,7 @@ namespace API_tests
                 countdownTimerValue = 30
             };
             var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
-            var info = await roomActions.GetRoomInfo(roomDetails, roomDetails);
+            var info = await roomActions.GetRoomInfo(roomDetails);
             var delete = RestService.For<RoomsPageInterface.DeleteRoom>(adress);
         }
 
@@ -133,14 +133,14 @@ namespace API_tests
                 countdownTimerValue = 30
             };
             var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
-            var info = await roomActions.GetRoomInfo(roomDetails, roomDetails);
+            var info = await roomActions.GetRoomInfo(roomDetails);
            
         }
 
               [Fact]
         public async void CreateStory()
         {
-             var dictionary = new Dictionary<string, string> { { "name", userName } };
+            var dictionary = new Dictionary<string, string> { { "name", userName } };
             var client = new HttpClient() { BaseAddress = new Uri(adress, UriKind.Absolute) };
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/authentication/anonymous") { Content = new FormUrlEncodedContent(dictionary) };
             var response = await client.SendAsync(request);
@@ -158,17 +158,87 @@ namespace API_tests
                 countdownTimerValue = 30
             };
             var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
-            var info = await roomActions.GetRoomInfo(roomDetails,roomDetails);
+            var info = await roomActions.GetRoomInfo(roomDetails);
 
             var storyDetails = new StoryBody
             {
-                RoomId = new GameInfo().GameId,
+                RoomId = info.GameId,
                 name = storyName
             };
             var storyActions = RestService.For<RoomPageInterface.StoryActions>(client);
-            var storyInfo = await storyActions.GetStory(gameId, storyDetails);
+            var storyInfo = await storyActions.GetStory(storyDetails, storyDetails);
+
+              var allStoryNameDetails = new StoryDetailsBody 
+            {
+                gameId = info.GameId,
+                page = 1, 
+                skip = 0,
+                perPage = 25,
+                status = 0
+            };
+            var storyDetailsList = RestService.For<RoomPageInterface.StoryActions>(client);
+            var allStoryDetails = await storyDetailsList.GetStoryDetails(allStoryNameDetails);
+
+
+            Assert.Equal(allStoryDetails.Stories[0].Title, storyName);
         }
 
+
+              [Fact]
+        public async void NewStoryName()
+        {
+            var dictionary = new Dictionary<string, string> { { "name", userName } };
+            var client = new HttpClient() { BaseAddress = new Uri(adress, UriKind.Absolute) };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/authentication/anonymous") { Content = new FormUrlEncodedContent(dictionary) };
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var roomDetails = new RoomBody
+            {
+                name = roomName,
+                cardSetType = 1,
+                haveStories = true,
+                showVotingToObservers = true,
+                confirmSkip = true,
+                autoReveal = true,
+                changeVote = false,
+                countdownTimer = false,
+                countdownTimerValue = 30
+            };
+            var roomActions = RestService.For<RoomsPageInterface.RoomActions>(client);
+            var info = await roomActions.GetRoomInfo(roomDetails);
+
+            var storyDetails = new StoryBody
+            {
+                RoomId = info.GameId,
+                name = storyName
+            };
+            var storyActions = RestService.For<RoomPageInterface.StoryActions>(client);
+            var storyInfo = await storyActions.GetStory(storyDetails, storyDetails);
+
+            var allStoryNameDetails = new StoryDetailsBody 
+            {
+                gameId = info.GameId,
+                page = 1, 
+                skip = 0,
+                perPage = 25,
+                status = 0
+            };
+            var storyDetailsList = RestService.For<RoomPageInterface.StoryActions>(client);
+            var allStoryDetails = await storyDetailsList.GetStoryDetails(allStoryNameDetails);
+
+            
+             var newStoryNameDetails = new UpdateStoryBody 
+            {
+                StoryId = allStoryDetails.Stories[0].Id,
+                Title = newStoryName
+            };
+            var newstoryDetailsList = RestService.For<RoomPageInterface.StoryActions>(client);
+            var newStoryDetails = await storyDetailsList.ChangeStoryName(newStoryNameDetails);
+
+            allStoryDetails = await storyDetailsList.GetStoryDetails(allStoryNameDetails);
+            Assert.Equal(allStoryDetails.Stories[0].Title, newStoryName);
+            
+        }
 
     }
 }
