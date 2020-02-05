@@ -30,9 +30,20 @@ namespace API_tests
             Task<StoryList> GetStoryDetails([Body(BodySerializationMethod.UrlEncoded)] StoryDetailsBody roomDetails); //Intoarce o lista cu toare story-urile dintr-un room
 
             [Post("/stories/update/")]
-            Task<StoryList> ChangeStoryName([Body(BodySerializationMethod.UrlEncoded)] UpdateStoryBody newStoryName);            
+            Task<StoryList> ChangeStoryName([Body(BodySerializationMethod.UrlEncoded)] UpdateStoryBody newStoryName);
+
+            [Post("/stories/delete/")]
+            Task<StoryList> DeleteStory([Body(BodySerializationMethod.UrlEncoded)] DeleteStoryBody storyId);
 
         }
 
+            public interface StartVoting
+            {
+                [Post("/stories/next/")]
+                Task<StartVotingDetails> Start([Body(BodySerializationMethod.UrlEncoded)] StartVotingBody gameId);
+
+                [Post("/stories/vote/")]
+                Task<StartVotingDetails> SelectedCard([Body(BodySerializationMethod.UrlEncoded)] StartVotingBody gameId);
+            }
     }
 }

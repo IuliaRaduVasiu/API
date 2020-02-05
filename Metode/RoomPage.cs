@@ -112,7 +112,7 @@ namespace API_tests
             return response;
         }
 
-        public StartVotingInfo StartVoting (string roomInfo)
+        public StartVotingDetails StartVoting (string roomInfo)
         {
             var request = HttpWebRequest.Create($"{url}/stories/next/");
             request.Method = "POST"; 
@@ -127,7 +127,7 @@ namespace API_tests
             var responseStream = response.GetResponseStream();
             var streamReader = new StreamReader(responseStream);
             var json = streamReader.ReadToEnd();
-            return JsonConvert.DeserializeObject<StartVotingInfo>(json);
+            return JsonConvert.DeserializeObject<StartVotingDetails>(json);
         }
 
         public WebResponse CardSelection (string roomInfo, int selectedCard)
