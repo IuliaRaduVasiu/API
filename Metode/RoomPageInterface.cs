@@ -43,7 +43,14 @@ namespace API_tests
                 Task<StartVotingDetails> Start([Body(BodySerializationMethod.UrlEncoded)] StartVotingBody gameId);
 
                 [Post("/stories/vote/")]
-                Task<StartVotingDetails> SelectedCard([Body(BodySerializationMethod.UrlEncoded)] StartVotingBody gameId);
+                Task SelectedCard([Body(BodySerializationMethod.UrlEncoded)] VotingBody gameId);
             }
+
+            public interface FinishVoting
+            {
+                [Post("/stories/finish/")]
+                Task Finish([Body(BodySerializationMethod.UrlEncoded)] FinishVotingBody gameId);
+            }
+            
     }
 }
