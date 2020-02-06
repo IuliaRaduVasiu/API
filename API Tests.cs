@@ -86,6 +86,7 @@ namespace API_tests
         [Fact]
         public  void DeteleRoom()
         {
+            
             //Scenario: Deleting a room
             //Given a user creates a username in the application
             var cookies = authentification.Authentication($"{adress}/authentication/anonymous", userName);
